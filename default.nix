@@ -15,6 +15,9 @@ let
         ];
         otherDeps = p: with p; [
             # Native dependencies, e.g. imagemagick
+            nodejs
+            esbuild
+            nodePackages.tailwindcss
         ];
         projectPath = ./.;
     };

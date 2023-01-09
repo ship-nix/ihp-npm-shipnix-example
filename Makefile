@@ -14,7 +14,6 @@ endif
 
 CSS_FILES += ${IHP}/static/vendor/bootstrap.min.css
 CSS_FILES += ${IHP}/static/vendor/flatpickr.min.css
-CSS_FILES += static/app.css
 
 JS_FILES += ${IHP}/static/vendor/jquery-3.6.0.slim.min.js
 JS_FILES += ${IHP}/static/vendor/timeago.js
@@ -29,3 +28,8 @@ JS_FILES += ${IHP}/static/vendor/turbolinksMorphdom.js
 
 include ${IHP}/Makefile.dist
 
+tailwind-dev:
+	npm ci && tailwindcss -c frontend/tailwind.config.js -i frontend/app.css -o static/app.css --watch
+
+js-dev:
+	esbuild frontend/app.jsx --bundle --watch --sourcemap --outfile=static/app.js

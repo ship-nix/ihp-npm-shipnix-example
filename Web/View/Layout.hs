@@ -36,12 +36,16 @@ stylesheets :: Html
 stylesheets = [hsx|
         <link rel="stylesheet" href={assetPath "/vendor/bootstrap-5.2.1/bootstrap.min.css"}/>
         <link rel="stylesheet" href={assetPath "/vendor/flatpickr.min.css"}/>
-        <link rel="stylesheet" href={assetPath "/app.css"}/>
+        {css}
     |]
+    where
+        css = if isDevelopment 
+                then [hsx|<link rel="stylesheet" href={assetPath "/app.css"}/>|] 
+                else [hsx|<link rel="stylesheet" href={assetPath "/frontend-assets/app.css"}/>|]
 
 scripts :: Html
-scripts = [hsx|
-        {when isDevelopment devScripts}
+scripts = if isDevelopment then [hsx|
+        {devScripts}
         <script src={assetPath "/vendor/jquery-3.6.0.slim.min.js"}></script>
         <script src={assetPath "/vendor/timeago.js"}></script>
         <script src={assetPath "/vendor/popper.min.js"}></script>
@@ -54,6 +58,9 @@ scripts = [hsx|
         <script src={assetPath "/helpers.js"}></script>
         <script src={assetPath "/ihp-auto-refresh.js"}></script>
         <script src={assetPath "/app.js"}></script>
+    |] else [hsx|
+        <script src={assetPath "/prod.js"}></script>
+        <script src={assetPath "/frontend-assets/app.js"}></script>
     |]
 
 devScripts :: Html
